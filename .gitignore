@@ -1,0 +1,71 @@
+# ==============================================================================
+# .NET / C# / WPF
+# ==============================================================================
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.userprefs
+TestResults/
+
+# NuGet
+node_modules/
+[Pp]ackages/
+*.nupkg
+.nuget/
+
+# ==============================================================================
+# C++ / CMake (native_src)
+# ==============================================================================
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Custom build directories
+build/
+build-*/
+out/
+out-*/
+
+# ==============================================================================
+# Custom Project Outputs
+# ==============================================================================
+# Exclude the generated redistributable archive
+RhinoThumbs.NET-Windows-x64.zip
+*.zip
+*.7z
+
+# Ignore the compiled openNURBS/Thumbnail extractor executables inside the tree 
+# (if they shouldn't be tracked) unless "Tools/ThumbnailExtractorCLI.exe" is explicitly added.
+# For now, we assume Tools/ThumbnailExtractorCLI.exe and Tools/7za.exe ARE source controlled,
+# but we shouldn't track random EXEs in the root or native build dirs.
+native_src/build/**/*.exe
+native_src/build/**/*.dll
+native_src/build/**/*.lib

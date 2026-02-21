@@ -1,0 +1,2 @@
+add_executable(ThumbnailExtractorCLI main.cpp)
+target_link_libraries(ThumbnailExtractorCLI PRIVATE core opennurbsStatic)
