@@ -264,11 +264,14 @@ namespace RhinoThumbs.NET.ViewModels
                 if (dialog.ShowDialog() == true)
                 {
                     string targetPath = dialog.FileName;
-                    string sevenZipPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Tools", "7za.exe");
+                    // The project file copies Tools\7za.exe next to the app's .exe; also accept a Tools subfolder.
+                    string sevenZipPath = System.IO.Path.Combine(AppContext.BaseDirectory, "7za.exe");
+                    if (!File.Exists(sevenZipPath))
+                        sevenZipPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Tools", "7za.exe");
 
                     if (!File.Exists(sevenZipPath))
                     {
-                        MessageBox.Show("The bundled 7-Zip component is missing from the Tools directory.", "Missing Dependency", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("The bundled 7-Zip component (7za.exe) is missing from the application folder.", "Missing Dependency", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
 
