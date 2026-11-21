@@ -1,0 +1,53 @@
+name: build
+
+# Every push and pull request builds the app. Pushing a tag like v1.0.0 also publishes
+# a GitHub release with the zipped Windows build attached.
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      # The openNURBS submodule is only needed to rebuild the native extractor, which is
+      # already checked in under Tools/, so it is not fetched here.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Publish self-contained build
+        shell: pwsh
+        run: |
+          $version = if ($env:GITHUB_REF_TYPE -eq 'tag') { $env:GITHUB_REF_NAME.TrimStart('v') } else { '0.0.0' }
+          dotnet publish RhinoThumbs.NET.csproj -c Release -r win-x64 --self-contained true `
+            -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true `
+            -p:DebugType=none -p:Version=$version -o publish
+      - name: Zip
+        shell: pwsh
+        run: |
+          Copy-Item LICENSE, THIRD_PARTY_NOTICES.md publish/
+          Get-ChildItem publish | Select-Object Name, Length
+          foreach ($f in 'RhinoThumbs.NET.exe', 'ThumbnailExtractorCLI.exe', '7za.exe') {
+            if (-not (Test-Path "publish/$f")) { throw "missing from the build: $f" }
+          }
+          Compress-Archive -Path publish/* -DestinationPath Rhino3dmViewer-win-x64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Rhino3dmViewer-win-x64
+          path: Rhino3dmViewer-win-x64.zip
+      - name: Publish GitHub release
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = $env:GITHUB_REF_NAME.TrimStart('v')
+          gh release create $env:GITHUB_REF_NAME Rhino3dmViewer-win-x64.zip `
+            --title "Rhino3dmViewer $version" `
+            --notes-file .github/release-notes.md

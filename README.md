@@ -11,6 +11,12 @@ Windows File Explorer shows `.3dm` files as blank icons unless Rhino is installe
 
 Free and open source ([MIT](LICENSE)). Windows 10 and 11, 64-bit.
 
+## Download
+
+Get `Rhino3dmViewer-win-x64.zip` from the [latest release](https://github.com/kartikddoshi/Rhino3dmViewer/releases/latest), unzip it anywhere and run `RhinoThumbs.NET.exe`. Keep the other files from the zip next to it. There is nothing else to install.
+
+Windows may show a SmartScreen warning the first time because the app is not code-signed: choose **More info**, then **Run anyway**.
+
 > **Getting the code:** openNURBS is included as a git submodule, so clone with
 > `git clone --recursive https://github.com/kartikddoshi/Rhino3dmViewer.git`
 > (or run `git submodule update --init` in an existing clone). A prebuilt
