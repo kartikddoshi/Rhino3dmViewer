@@ -121,6 +121,10 @@ namespace RhinoThumbs.NET.ViewModels
             {
                 await Task.Run(() => SearchDirectory(_currentFolderPath, searchLower, isSearching, token), token);
 
+                // SearchDirectory queues each file onto the UI thread at Background priority.
+                // Wait for those queued adds to run, otherwise Files.Count is still 0 here.
+                await Application.Current.Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle);
+
                 if (!token.IsCancellationRequested)
                 {
                     StatusMessage = isSearching ? $"{Files.Count} matching items" : $"{Files.Count} items";
