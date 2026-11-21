@@ -1,6 +1,21 @@
-# RhinoThumbs.NET & Interactive Viewer
+# RhinoThumbs.NET: fast browser and 3D viewer for Rhino `.3dm` files
 
-A modern, high-performance WPF application for browsing, managing, and interactively viewing Rhino 3D (`.3dm`) files. It extracts embedded preview images instantly and offers a full 3D hardware-accelerated viewport for diving deeper into your CAD models.
+Browse folders full of Rhino 3D (`.3dm`) files as a grid of thumbnails, search them, and open any model in an interactive 3D view to rotate it and measure it. You don't need Rhino installed or a Rhino license.
+
+Windows File Explorer shows `.3dm` files as blank icons unless Rhino is installed. This app reads the preview image every `.3dm` file carries inside it, so you can find the right model by sight, including on shared network drives.
+
+**Who is it for?**
+- Jewellery, product and industrial designers with hundreds of `.3dm` files spread over folders and network shares.
+- Workshop, production and sales staff who need to look at a model or check a dimension but don't have a Rhino seat.
+- Anyone who receives `.3dm` files and just wants to see what is inside.
+
+Free and open source ([MIT](LICENSE)). Windows 10 and 11, 64-bit.
+
+> **Getting the code:** openNURBS is included as a git submodule, so clone with
+> `git clone --recursive https://github.com/kartikddoshi/Rhino3dmViewer.git`
+> (or run `git submodule update --init` in an existing clone). A prebuilt
+> `ThumbnailExtractorCLI.exe` is already in `Tools/`, so you only need the submodule
+> if you want to rebuild the native extractor.
 
 ## ✨ Features
 
@@ -19,7 +34,7 @@ A modern, high-performance WPF application for browsing, managing, and interacti
 ### Contextual File Operations
 *   **Native Copying**: Right-click to copy files into your clipboard (can be pasted directly into Windows Explorer).
 *   **Quick Open**: Right-click to "Open in Explorer" to jump straight to the directory of a file or folder.
-*   **7-Zip Compression**: Right-click to compress any `.3dm` file or folder into a `.7z` archive using standard background `7z.exe` integration.
+*   **7-Zip Compression**: Right-click to compress any `.3dm` file or folder into a `.7z` archive using the bundled `7za.exe` (no separate 7-Zip install needed).
 *   **Clean Metadata**: Displays file name, date modified, and file size cleanly below every thumbnail.
 
 ---
@@ -38,7 +53,7 @@ A modern, high-performance WPF application for browsing, managing, and interacti
     *   `/Services`: Background extraction and `Rhino3dm` native meshing logic.
 *   `native_src/`: Source code for the `ThumbnailExtractorCLI` tool (C++).
     *   This is a standalone CMake project that links against OpenNURBS.
-    *   *Note: OpenNURBS SDK source code must be located in `native_src/3rdparty/opennurbs` to build from scratch.*
+    *   *Note: openNURBS is a git submodule at `native_src/3rdparty/opennurbs`; run `git submodule update --init` before building it.*
 
 ---
 
@@ -72,7 +87,13 @@ The output can be safely zipped and distributed to non-developers.
 *   **No Thumbnails**: 
     *   Ensure `ThumbnailExtractorCLI.exe` is physically present in the same directory as the main executable.
     *   Ensure the `.3dm` files were saved in Rhino with "Save Small" **unchecked** (so a preview image exists).
-*   **Missing 7-Zip option**:
-    *   Install 7-Zip from their official site if you wish to use the right-click compression feature.
+*   **"7-Zip component is missing"**:
+    *   `7za.exe` must sit next to the app's `.exe` (the build copies it there from `Tools/`).
 *   **3D Viewer is Blank**:
     *   Some very large or complex NURBS objects without pre-computed render meshes might fail to display. The application attempts to use existing render meshes to maintain speed.
+
+---
+
+## License
+
+MIT, see [LICENSE](LICENSE). Bundled and referenced components keep their own licenses: see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Rhino is a trademark of Robert McNeel & Associates; this project is not affiliated with McNeel.

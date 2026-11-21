@@ -69,3 +69,7 @@ RhinoThumbs.NET-Windows-x64.zip
 native_src/build/**/*.exe
 native_src/build/**/*.dll
 native_src/build/**/*.lib
+
+# CMake build folders for the native extractor
+native_src/build/
+native_src/build_cli/
