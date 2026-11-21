@@ -4,6 +4,10 @@ Browse folders full of Rhino 3D (`.3dm`) files as a grid of thumbnails, search t
 
 Windows File Explorer shows `.3dm` files as blank icons unless Rhino is installed. This app reads the preview image every `.3dm` file carries inside it, so you can find the right model by sight, including on shared network drives.
 
+![Folder tree, thumbnail grid and preview pane showing five earring models](docs/screenshots/browser.png)
+
+![3D view of a stud earring with a 9.89 mm measurement between two points](docs/screenshots/viewer-measure.png)
+
 **Who is it for?**
 - Jewellery, product and industrial designers with hundreds of `.3dm` files spread over folders and network shares.
 - Workshop, production and sales staff who need to look at a model or check a dimension but don't have a Rhino seat.
